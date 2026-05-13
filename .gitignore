@@ -1,0 +1,42 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+.env
+# Runtime-only outputs (regenerable). Seed data under data/processed
+# and data/catalog IS committed so the live dashboard has something to
+# render without running the full ingest on first load.
+data/raw/
+data/exports/
+data/athena_results/
+
+# Streamlit Cloud log dumps saved locally for debugging
+logs-*.txt
+logs/
+*.duckdb
+*.duckdb.wal
+.streamlit/secrets.toml
+.DS_Store
+
+# Claude Code / Claude Desktop
+CLAUDE.md
+.claude/
+skills/
+
+# AWS reference docs (kept local for the academic presentation, not pushed)
+00_PROJECT_OVERVIEW.md
+01_ARCHITECTURE.md
+02_AWS_INFRASTRUCTURE.md
+03_DATA_PIPELINE.md
+04_GLUE_ETL_JOBS.md
+05_LAMBDA_FUNCTIONS.md
+06_ATHENA_QUERIES.md
+07_QUICKSIGHT_DASHBOARD.md
+08_STEP_FUNCTIONS_PRESENTATION.md
+09_FRONTEND_DASHBOARD.md
+10_DEPLOYMENT_AND_CV.md
+
+# Project notes (kept local)
+docs/

@@ -1,0 +1,45 @@
+name: Debug Streamlit startup
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  apptest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run AppTest on dashboard/app.py
+        run: |
+          python - <<'PY'
+          import traceback
+          from streamlit.testing.v1 import AppTest
+
+          at = AppTest.from_file("dashboard/app.py", default_timeout=120)
+          at.run()
+
+          print("=" * 70)
+          print(f"Exceptions captured: {len(at.exception)}")
+          for i, e in enumerate(at.exception, 1):
+              print(f"--- Exception {i} ---")
+              print(e.value)
+              print(e.stack_trace if hasattr(e, "stack_trace") else "(no stack)")
+          print("=" * 70)
+          print(f"Errors captured: {len(at.error)}")
+          for i, err in enumerate(at.error, 1):
+              print(f"--- Error {i} ---")
+              print(err.value)
+          print("=" * 70)
+          print(f"Warnings captured: {len(at.warning)}")
+          for w in at.warning:
+              print("WARNING:", w.value)
+          PY
